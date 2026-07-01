@@ -109,3 +109,4 @@ sources.list.*
 # Generated mirror configs
 apt-retries-count
 fsroot-*/
+sonic_debian_extension.sh
