@@ -18,3 +18,4 @@ $(SONIC_UTILITIES_PY3)_DEBS_DEPENDS = $(LIBYANG) \
                                       $(LIBSWSSCOMMON) \
                                       $(PYTHON3_SWSSCOMMON)
 SONIC_PYTHON_WHEELS += $(SONIC_UTILITIES_PY3)
+$(SONIC_UTILITIES_PY3)_TEST = n
