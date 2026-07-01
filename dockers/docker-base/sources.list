@@ -3,5 +3,5 @@
 
 deb [arch=amd64] http://debian-archive.trafficmanager.net/debian/ jessie main contrib non-free
 deb-src [arch=amd64] http://debian-archive.trafficmanager.net/debian/ jessie main contrib non-free
-deb [arch=amd64] http://debian-archive.trafficmanager.net/debian-security/ jessie/updates main contrib non-free
-deb-src [arch=amd64] http://debian-archive.trafficmanager.net/debian-security/ jessie/updates main contrib non-free
+deb [arch=amd64] http://archive.debian.org/debian-security/ jessie/updates main contrib non-free
+deb-src [arch=amd64] http://archive.debian.org/debian-security/ jessie/updates main contrib non-free

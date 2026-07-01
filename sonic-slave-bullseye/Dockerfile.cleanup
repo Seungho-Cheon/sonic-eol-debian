@@ -1,0 +1,11 @@
+# Base docker build
+FROM sonic-slave-bullseye:4d2553a2fe8
+
+# Copy the cache data to host
+From scratch as output
+COPY --from=sonic-slave-bullseye:4d2553a2fe8 /cache.tgz cache.tgz
+
+# Clean up the cache data
+FROM sonic-slave-bullseye:4d2553a2fe8 as final
+RUN rm /cache.tgz
+
