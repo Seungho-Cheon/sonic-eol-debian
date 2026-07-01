@@ -2,14 +2,14 @@
 SHELL = /bin/bash
 .SHELLFLAGS += -e
 
-LIBYANG_URL = http://archive.debian.org/debian/pool/main/liby/libyang
+LIBYANG_URL = https://snapshot.debian.org/archive/debian/20211125T145258Z/pool/main/liby/libyang2
 
 DSC_FILE = libyang2_$(LIBYANG2_FULLVERSION).dsc
 ORIG_FILE = libyang2_$(LIBYANG2_VERSION).orig.tar.gz
 DEBIAN_FILE = libyang2_$(LIBYANG2_FULLVERSION).debian.tar.xz
 
 DSC_FILE_URL = $(LIBYANG_URL)/$(DSC_FILE)
-ORIG_FILE_URL = $(LIBYANG_URL)/$(ORIG_FILE)
+ORIG_FILE_URL = https://snapshot.debian.org/archive/debian/20211113T145007Z/pool/main/liby/libyang2/$(ORIG_FILE)
 DEBIAN_FILE_URL = $(LIBYANG_URL)/$(DEBIAN_FILE)
 
 MAIN_TARGET = $(LIBYANG2)

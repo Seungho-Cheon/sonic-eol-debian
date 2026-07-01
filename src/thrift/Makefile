@@ -15,9 +15,9 @@ THRIFT_LINK_PRE = https://sonicstorage.blob.core.windows.net/public/debian
 $(addprefix $(DEST)/, $(MAIN_TARGET)): $(DEST)/% :
 	rm -rf thrift-$(THRIFT_VERSION)
 
-	wget -NO "thrift_$(THRIFT_VERSION).orig.tar.gz" "$(THRIFT_LINK_PRE)/thrift_0.11.0.orig.tar.gz"
-	wget -NO "thrift_$(THRIFT_VERSION_FULL).debian.tar.xz" "$(THRIFT_LINK_PRE)/thrift_0.11.0-4.debian.tar.xz"
-	wget -NO "thrift_$(THRIFT_VERSION_FULL).dsc" "$(THRIFT_LINK_PRE)/thrift_0.11.0-4.dsc"
+	wget -NO "thrift_$(THRIFT_VERSION).orig.tar.gz" "https://snapshot.debian.org/archive/debian/20181011T155709Z/pool/main/t/thrift/thrift_0.11.0.orig.tar.gz"
+	wget -NO "thrift_$(THRIFT_VERSION_FULL).debian.tar.xz" "https://snapshot.debian.org/archive/debian/20190109T034833Z/pool/main/t/thrift/thrift_0.11.0-4.debian.tar.xz"
+	wget -NO "thrift_$(THRIFT_VERSION_FULL).dsc" "https://snapshot.debian.org/archive/debian/20190109T034833Z/pool/main/t/thrift/thrift_0.11.0-4.dsc"
 
 	dpkg-source -x thrift_$(THRIFT_VERSION_FULL).dsc
 	pushd thrift-$(THRIFT_VERSION)
