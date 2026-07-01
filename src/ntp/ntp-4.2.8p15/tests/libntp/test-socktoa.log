@@ -1,0 +1,17 @@
+socktoa.c:11:test_IPv4AddressWithPort:PASS
+socktoa.c:12:test_IPv6AddressWithPort:PASS
+socktoa.c:13:test_IgnoreIPv6Fields:PASS
+socktoa.c:14:test_ScopedIPv6AddressWithPort:PASS
+socktoa.c:15:test_HashEqual:PASS
+IPv4 comparision failed, expected: 192.0.2.1(192.0.2.1) but was: 192.0.2.2(192.0.2.2)socktoa.c:16:test_HashNotEqual:PASS
+
+-----------------------
+6 Tests: 
+6 PASS 
+0 XFAIL 
+0 Failures 
+0 XPASS 
+0 Ignored 
+
+OK
+PASS test-socktoa (exit status: 0)

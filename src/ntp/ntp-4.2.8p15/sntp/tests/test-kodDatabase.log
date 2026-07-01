@@ -1,0 +1,20 @@
+kodDatabase.c:14:test_SingleEntryHandling:PASS
+ 1 Jul 02:19:25 test-kodDatabase[123168]: An error occured while parsing the KoD db file /dev/null
+kodDatabase.c:15:test_MultipleEntryHandling:PASS
+ 1 Jul 02:19:25 test-kodDatabase[123168]: An error occured while parsing the KoD db file /dev/null
+kodDatabase.c:16:test_NoMatchInSearch:PASS
+ 1 Jul 02:19:25 test-kodDatabase[123168]: An error occured while parsing the KoD db file /dev/null
+kodDatabase.c:17:test_AddDuplicate:PASS
+ 1 Jul 02:19:27 test-kodDatabase[123168]: An error occured while parsing the KoD db file /dev/null
+kodDatabase.c:18:test_DeleteEntry:PASS
+
+-----------------------
+5 Tests: 
+5 PASS 
+0 XFAIL 
+0 Failures 
+0 XPASS 
+0 Ignored 
+
+OK
+PASS test-kodDatabase (exit status: 0)

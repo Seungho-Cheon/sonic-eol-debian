@@ -1,0 +1,51 @@
+calendar.c:28:test_Constants:PASS
+calendar.c:29:test_DaySplitMerge:PASS
+calendar.c:30:test_WeekSplitMerge:PASS
+calendar.c:31:test_SplitYearDays1:PASS
+calendar.c:32:test_SplitYearDays2:PASS
+calendar.c:33:test_SplitEraDays:PASS
+calendar.c:34:test_SplitEraWeeks:PASS
+calendar.c:35:test_RataDie1:PASS
+calendar.c:36:test_LeapYears1:PASS
+calendar.c:37:test_LeapYears2:PASS
+calendar.c:38:test_LeapYears3:PASS
+calendar.c:39:test_RoundTripDate:PASS
+calendar.c:40:test_RoundTripYearStart:PASS
+calendar.c:41:test_RoundTripMonthStart:PASS
+calendar.c:42:test_RoundTripWeekStart:PASS
+calendar.c:43:test_RoundTripDayStart:PASS
+calendar.c:44:test_IsoCalYearsToWeeks:PASS
+calendar.c:45:test_IsoCalWeeksToYearStart:PASS
+calendar.c:46:test_IsoCalWeeksToYearEnd:PASS
+calendar.c:47:test_DaySecToDate:PASS
+ 1 Jul 02:19:28 test-calendar[125164]: basedate set to 2019-03-31
+ 1 Jul 02:19:28 test-calendar[125164]: gps base set to 2019-03-31 (week 2047)
+calendar.c:48:test_GpsRollOver:PASS
+ 1 Jul 02:19:28 test-calendar[125164]: basedate set to 2019-04-07
+ 1 Jul 02:19:28 test-calendar[125164]: gps base set to 2019-04-07 (week 2048)
+calendar.c:49:test_GpsRemapFunny:PASS
+ 1 Jul 02:19:28 test-calendar[125164]: basedate set to 1980-01-06
+ 1 Jul 02:19:28 test-calendar[125164]: gps base set to 1980-01-06 (week 0)
+calendar.c:51:test_GpsNtpFixpoints:PASS
+calendar.c:52:test_NtpToNtp:PASS
+calendar.c:53:test_NtpToTime:PASS
+calendar.c:55:test_CalUMod7:PASS
+calendar.c:56:test_CalIMod7:PASS
+calendar.c:57:test_RellezCentury1_1:PASS
+calendar.c:58:test_RellezCentury3_1:PASS
+calendar.c:59:test_RellezYearZero:PASS
+calendar.c:1059:test_RellezEra:PASS
+calendar.c:1144:test_zellerDirect:PASS
+calendar.c:1192:test_ZellerDirectBad:PASS
+calendar.c:1207:test_zellerModInv:PASS
+
+-----------------------
+34 Tests: 
+34 PASS 
+0 XFAIL 
+0 Failures 
+0 XPASS 
+0 Ignored 
+
+OK
+PASS test-calendar (exit status: 0)

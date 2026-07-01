@@ -1,0 +1,19 @@
+sbprintf.c:7:test_NullBuf1:PASS
+sbprintf.c:14:test_NullBuf2:PASS
+sbprintf.c:23:test_EndBeyond:PASS
+sbprintf.c:33:test_SmallBuf:PASS
+sbprintf.c:44:test_MatchBuf:PASS
+sbprintf.c:55:test_BigBuf:PASS
+sbprintf.c:66:test_SimpleArgs:PASS
+sbprintf.c:78:test_Increment1:PASS
+
+-----------------------
+8 Tests: 
+8 PASS 
+0 XFAIL 
+0 Failures 
+0 XPASS 
+0 Ignored 
+
+OK
+PASS test-sbprintf (exit status: 0)
