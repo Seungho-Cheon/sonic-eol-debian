@@ -1,0 +1,195 @@
+Description: Remove dependency on errror-prone library
+ Library is not necessary and is not currently available in Debian. This patch
+ can be safely removed if the error-prone library is ever added to Debian and
+ that functionality is needed in protobuf.
+Author: Olek Wojnar <olek@debian.org>
+Last-Update: 2022-03-11
+
+--- a/java/util/src/main/java/com/google/protobuf/util/Durations.java
++++ b/java/util/src/main/java/com/google/protobuf/util/Durations.java
+@@ -42,8 +42,8 @@ import static com.google.protobuf.util.T
+ import static com.google.protobuf.util.Timestamps.NANOS_PER_MILLISECOND;
+ import static com.google.protobuf.util.Timestamps.NANOS_PER_SECOND;
+ 
+-import com.google.errorprone.annotations.CanIgnoreReturnValue;
+-import com.google.errorprone.annotations.CompileTimeConstant;
++//import com.google.errorprone.annotations.CanIgnoreReturnValue;
++//import com.google.errorprone.annotations.CompileTimeConstant;
+ import com.google.protobuf.Duration;
+ import java.io.Serializable;
+ import java.text.ParseException;
+@@ -162,7 +162,6 @@ public final class Durations {
+    * @throws IllegalArgumentException if {@code duration} is negative or invalid
+    * @throws NullPointerException if {@code duration} is {@code null}
+    */
+-  @CanIgnoreReturnValue
+   public static Duration checkNotNegative(Duration duration) {
+     checkArgument(!isNegative(duration), "duration (%s) must not be negative", toString(duration));
+     return duration;
+@@ -174,14 +173,12 @@ public final class Durations {
+    * @throws IllegalArgumentException if {@code duration} is negative, {@code ZERO}, or invalid
+    * @throws NullPointerException if {@code duration} is {@code null}
+    */
+-  @CanIgnoreReturnValue
+   public static Duration checkPositive(Duration duration) {
+     checkArgument(isPositive(duration), "duration (%s) must be positive", toString(duration));
+     return duration;
+   }
+ 
+   /** Throws an {@link IllegalArgumentException} if the given {@link Duration} is not valid. */
+-  @CanIgnoreReturnValue
+   public static Duration checkValid(Duration duration) {
+     long seconds = duration.getSeconds();
+     int nanos = duration.getNanos();
+@@ -287,7 +284,7 @@ public final class Durations {
+    * @return a {@link Duration} parsed from the string
+    * @throws IllegalArgumentException if parsing fails
+    */
+-  public static Duration parseUnchecked(@CompileTimeConstant String value) {
++  public static Duration parseUnchecked(String value) {
+     try {
+       return parse(value);
+     } catch (ParseException e) {
+--- a/java/util/src/main/java/com/google/protobuf/util/FieldMaskTree.java
++++ b/java/util/src/main/java/com/google/protobuf/util/FieldMaskTree.java
+@@ -31,7 +31,7 @@
+ package com.google.protobuf.util;
+ 
+ import com.google.common.base.Splitter;
+-import com.google.errorprone.annotations.CanIgnoreReturnValue;
++//import com.google.errorprone.annotations.CanIgnoreReturnValue;
+ import com.google.protobuf.Descriptors.Descriptor;
+ import com.google.protobuf.Descriptors.FieldDescriptor;
+ import com.google.protobuf.FieldMask;
+@@ -93,7 +93,6 @@ final class FieldMaskTree {
+    * exists, which will turn the tree node for "foo.bar" to a leaf node. Likewise, if the field path
+    * to add is a sub-path of an existing leaf node, nothing will be changed in the tree.
+    */
+-  @CanIgnoreReturnValue
+   @SuppressWarnings("StringSplitter")
+   FieldMaskTree addFieldPath(String path) {
+     String[] parts = path.split(FIELD_PATH_SEPARATOR_REGEX);
+@@ -124,7 +123,6 @@ final class FieldMaskTree {
+   }
+ 
+   /** Merges all field paths in a FieldMask into this tree. */
+-  @CanIgnoreReturnValue
+   FieldMaskTree mergeFromFieldMask(FieldMask mask) {
+     for (String path : mask.getPathsList()) {
+       addFieldPath(path);
+@@ -146,7 +144,6 @@ final class FieldMaskTree {
+    *   <li>If the field path to remove is a non-exist sub-path, nothing will be changed.
+    * </ul>
+    */
+-  @CanIgnoreReturnValue
+   FieldMaskTree removeFieldPath(String path) {
+     List<String> parts = Splitter.onPattern(FIELD_PATH_SEPARATOR_REGEX).splitToList(path);
+     if (parts.isEmpty()) {
+@@ -161,7 +158,6 @@ final class FieldMaskTree {
+    *
+    * @return a boolean value indicating whether current {@code node} should be removed.
+    */
+-  @CanIgnoreReturnValue
+   private static boolean removeFieldPath(Node node, List<String> parts, int index) {
+     String key = parts.get(index);
+ 
+@@ -182,7 +178,6 @@ final class FieldMaskTree {
+   }
+ 
+   /** Removes all field paths in {@code mask} from this tree. */
+-  @CanIgnoreReturnValue
+   FieldMaskTree removeFromFieldMask(FieldMask mask) {
+     for (String path : mask.getPathsList()) {
+       removeFieldPath(path);
+--- a/java/util/src/main/java/com/google/protobuf/util/FieldMaskUtil.java
++++ b/java/util/src/main/java/com/google/protobuf/util/FieldMaskUtil.java
+@@ -37,7 +37,7 @@ import com.google.common.base.Joiner;
+ import com.google.common.base.Optional;
+ import com.google.common.base.Splitter;
+ import com.google.common.primitives.Ints;
+-import com.google.errorprone.annotations.CanIgnoreReturnValue;
++//import com.google.errorprone.annotations.CanIgnoreReturnValue;
+ import com.google.protobuf.Descriptors.Descriptor;
+ import com.google.protobuf.Descriptors.FieldDescriptor;
+ import com.google.protobuf.FieldMask;
+@@ -345,7 +345,6 @@ public final class FieldMaskUtil {
+      *
+      * <p>If false, merge the source message field into the destination message field.
+      */
+-    @CanIgnoreReturnValue
+     public MergeOptions setReplaceMessageFields(boolean value) {
+       replaceMessageFields = value;
+       return this;
+@@ -358,7 +357,6 @@ public final class FieldMaskUtil {
+      *
+      * <p>If false, append elements from source repeated field to the destination repeated field.
+      */
+-    @CanIgnoreReturnValue
+     public MergeOptions setReplaceRepeatedFields(boolean value) {
+       replaceRepeatedFields = value;
+       return this;
+@@ -375,7 +373,6 @@ public final class FieldMaskUtil {
+      * field, and if the source field is unset, the default value of the source field is copied to
+      * the destination.
+      */
+-    @CanIgnoreReturnValue
+     public MergeOptions setReplacePrimitiveFields(boolean value) {
+       replacePrimitiveFields = value;
+       return this;
+--- a/java/util/src/main/java/com/google/protobuf/util/JsonFormat.java
++++ b/java/util/src/main/java/com/google/protobuf/util/JsonFormat.java
+@@ -32,7 +32,7 @@ package com.google.protobuf.util;
+ 
+ import com.google.common.base.Preconditions;
+ import com.google.common.io.BaseEncoding;
+-import com.google.errorprone.annotations.CanIgnoreReturnValue;
++//import com.google.errorprone.annotations.CanIgnoreReturnValue;
+ import com.google.gson.Gson;
+ import com.google.gson.GsonBuilder;
+ import com.google.gson.JsonArray;
+@@ -544,7 +544,6 @@ public class JsonFormat {
+        * Adds a message type and all types defined in the same .proto file as well as all
+        * transitively imported .proto files to this {@link Builder}.
+        */
+-      @CanIgnoreReturnValue
+       public Builder add(Descriptor messageType) {
+         if (built) {
+           throw new IllegalStateException("A TypeRegistry.Builder can only be used once.");
+@@ -557,7 +553,6 @@ public class JsonFormat {
+        * Adds message types and all types defined in the same .proto file as well as all
+        * transitively imported .proto files to this {@link Builder}.
+        */
+-      @CanIgnoreReturnValue
+       public Builder add(Iterable<Descriptor> messageTypes) {
+         if (built) {
+           throw new IllegalStateException("A TypeRegistry.Builder can only be used once.");
+--- a/java/util/src/main/java/com/google/protobuf/util/Timestamps.java
++++ b/java/util/src/main/java/com/google/protobuf/util/Timestamps.java
+@@ -36,8 +36,8 @@ import static com.google.common.math.Lon
+ import static com.google.common.math.LongMath.checkedMultiply;
+ import static com.google.common.math.LongMath.checkedSubtract;
+ 
+-import com.google.errorprone.annotations.CanIgnoreReturnValue;
+-import com.google.errorprone.annotations.CompileTimeConstant;
++//import com.google.errorprone.annotations.CanIgnoreReturnValue;
++//import com.google.errorprone.annotations.CompileTimeConstant;
+ import com.google.j2objc.annotations.J2ObjCIncompatible;
+ import com.google.protobuf.Duration;
+ import com.google.protobuf.Timestamp;
+@@ -168,7 +168,6 @@ public final class Timestamps {
+   }
+ 
+   /** Throws an {@link IllegalArgumentException} if the given {@link Timestamp} is not valid. */
+-  @CanIgnoreReturnValue
+   public static Timestamp checkValid(Timestamp timestamp) {
+     long seconds = timestamp.getSeconds();
+     int nanos = timestamp.getNanos();
+@@ -297,7 +296,7 @@ public final class Timestamps {
+    * @return a {@link Timestamp} parsed from the string
+    * @throws IllegalArgumentException if parsing fails
+    */
+-  public static Timestamp parseUnchecked(@CompileTimeConstant String value) {
++  public static Timestamp parseUnchecked(String value) {
+     try {
+       return parse(value);
+     } catch (ParseException e) {

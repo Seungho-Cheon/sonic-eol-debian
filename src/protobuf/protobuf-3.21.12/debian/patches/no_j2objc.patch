@@ -1,0 +1,27 @@
+Description: Remove dependency on j2objc library
+ It's not needed for Debian.
+Author: Laszlo Boszormenyi (GCS) <gcs@debian.org>
+Forwarded: not-needed
+Last-Update: 2022-03-11
+
+---
+
+--- a/java/util/src/main/java/com/google/protobuf/util/Timestamps.java
++++ b/java/util/src/main/java/com/google/protobuf/util/Timestamps.java
+@@ -38,7 +38,7 @@ import static com.google.common.math.Lon
+ 
+ //import com.google.errorprone.annotations.CanIgnoreReturnValue;
+ //import com.google.errorprone.annotations.CompileTimeConstant;
+-import com.google.j2objc.annotations.J2ObjCIncompatible;
++//import com.google.j2objc.annotations.J2ObjCIncompatible;
+ import com.google.protobuf.Duration;
+ import com.google.protobuf.Timestamp;
+ import java.io.Serializable;
+@@ -338,7 +338,6 @@ public final class Timestamps {
+    * @throws IllegalArgumentException if the year is before 1 CE or after 9999 CE
+    */
+   @SuppressWarnings("GoodTime") // this is a legacy conversion API
+-  @J2ObjCIncompatible
+   public static Timestamp fromDate(Date date) {
+     if (date instanceof java.sql.Timestamp) {
+       java.sql.Timestamp sqlTimestamp = (java.sql.Timestamp) date;

@@ -1,0 +1,5 @@
+version=4
+opts=uversionmangle=s/(\d)[_\.\-\+]?((rc|pre|dev|beta|alpha|b|a)[\-\.]?\d*)$/$1~$2/i,\
+dversionmangle=s/\+(debian|dfsg|ds|deb)(\.?\d+)?$//i \
+https://github.com/protocolbuffers/protobuf/tags \
+(?:|.*/)v?(\d\S*)@ARCHIVE_EXT@

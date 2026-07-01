@@ -1,0 +1,11 @@
+ruby-google-protobuf
+libprotobuf32
+libprotobuf-lite32
+libprotobuf-dev
+libprotoc32
+libprotoc-dev
+protobuf-compiler
+python3-protobuf
+libprotobuf-java
+elpa-protobuf-mode
+php-google-protobuf

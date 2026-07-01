@@ -1,0 +1,32 @@
+Description: hppa is over aligned and fails
+ Filter out hppa machines on the static_assert lines.
+Author: Laszlo Boszormenyi (GCS) <gcs@debian.org>
+Forwarded: no
+Last-Update: 2023-04-09
+
+---
+
+--- a/src/google/protobuf/descriptor.cc
++++ b/src/google/protobuf/descriptor.cc
+@@ -370,7 +370,9 @@ class FlatAllocatorImpl {
+     GOOGLE_CHECK(!has_allocated());
+     if (std::is_trivially_destructible<U>::value) {
+       // Trivial types are aligned to 8 bytes.
++#if !defined(__hppa__)
+       static_assert(alignof(U) <= 8, "");
++#endif
+       total_.template Get<char>() += RoundUpTo<8>(array_size * sizeof(U));
+     } else {
+       // Since we can't use `if constexpr`, just make the expression compile
+--- a/src/google/protobuf/map.h
++++ b/src/google/protobuf/map.h
+@@ -121,7 +121,9 @@ class MapAllocator {
+   // MapAllocator does not support alignments beyond 8. Technically we should
+   // support up to std::max_align_t, but this fails with ubsan and tcmalloc
+   // debug allocation logic which assume 8 as default alignment.
++#if !defined(__hppa__)
+   static_assert(alignof(value_type) <= 8, "");
++#endif
+ 
+   pointer allocate(size_type n, const void* /* hint */ = nullptr) {
+     // If arena is not given, malloc needs to be called which doesn't

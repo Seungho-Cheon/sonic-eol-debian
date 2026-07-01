@@ -1,0 +1,178 @@
+Description: fix Python build tests
+ Add bits to expect 32 bit systems.
+Author: Laszlo Boszormenyi (GCS) <gcs@debian.org>
+Bug-Debian: https://bugs.debian.org/1033998
+Forwarded: no
+Last-Update: 2023-04-07
+
+---
+
+--- protobuf-3.21.12.orig/python/google/protobuf/internal/descriptor_test.py
++++ protobuf-3.21.12/python/google/protobuf/internal/descriptor_test.py
+@@ -32,6 +32,7 @@
+ 
+ __author__ = 'robinson@google.com (Will Robinson)'
+ 
++import platform
+ import unittest
+ import warnings
+ 
+@@ -269,16 +270,18 @@ class DescriptorTest(unittest.TestCase):
+         unittest_custom_options_pb2.int32_opt])
+     self.assertEqual(kint64max, message_options.Extensions[
+         unittest_custom_options_pb2.int64_opt])
+-    self.assertEqual(kuint32max, message_options.Extensions[
+-        unittest_custom_options_pb2.uint32_opt])
++    if platform.architecture()[0] != '32bit':
++        self.assertEqual(kuint32max, message_options.Extensions[
++            unittest_custom_options_pb2.uint32_opt])
+     self.assertEqual(kuint64max, message_options.Extensions[
+         unittest_custom_options_pb2.uint64_opt])
+     self.assertEqual(kint32max, message_options.Extensions[
+         unittest_custom_options_pb2.sint32_opt])
+     self.assertEqual(kint64max, message_options.Extensions[
+         unittest_custom_options_pb2.sint64_opt])
+-    self.assertEqual(kuint32max, message_options.Extensions[
+-        unittest_custom_options_pb2.fixed32_opt])
++    if platform.architecture()[0] != '32bit':
++        self.assertEqual(kuint32max, message_options.Extensions[
++            unittest_custom_options_pb2.fixed32_opt])
+     self.assertEqual(kuint64max, message_options.Extensions[
+         unittest_custom_options_pb2.fixed64_opt])
+     self.assertEqual(kint32max, message_options.Extensions[
+--- protobuf-3.21.12.orig/python/google/protobuf/internal/json_format_test.py
++++ protobuf-3.21.12/python/google/protobuf/internal/json_format_test.py
+@@ -59,7 +59,7 @@ class JsonFormatBase(unittest.TestCase):
+   def FillAllFields(self, message):
+     message.int32_value = 20
+     message.int64_value = -20
+-    message.uint32_value = 3120987654
++    message.uint32_value = 2147483647
+     message.uint64_value = 12345678900
+     message.float_value = float('-inf')
+     message.double_value = 3.1415
+@@ -127,7 +127,7 @@ class JsonFormatTest(JsonFormatBase):
+     message = json_format_proto3_pb2.TestMessage()
+     text = ('{"int32Value": 20, '
+             '"int64Value": "-20", '
+-            '"uint32Value": 3120987654,'
++            '"uint32Value": 2147483647,'
+             '"uint64Value": "12345678900",'
+             '"floatValue": "-Infinity",'
+             '"doubleValue": 3.1415,'
+@@ -140,7 +140,7 @@ class JsonFormatTest(JsonFormatBase):
+             '"repeatedInt64Value": ["9007199254740992", "-9007199254740992"],'
+             '"repeatedUint32Value": [268435455, 134217727],'
+             '"repeatedUint64Value": ["9007199254740992", "9007199254740991"],'
+-            '"repeatedFloatValue": [0],'
++            '"repeatedFloatValue": [0.0],'
+             '"repeatedDoubleValue": [1e-15, "Infinity"],'
+             '"repeatedBoolValue": [true, false],'
+             '"repeatedStringValue": ["Few symbols!#$,;", "bar"],'
+--- protobuf-3.21.12.orig/python/google/protobuf/internal/reflection_test.py
++++ protobuf-3.21.12/python/google/protobuf/internal/reflection_test.py
+@@ -36,6 +36,7 @@ pure-Python protocol compiler.
+ import copy
+ import gc
+ import operator
++import platform
+ import struct
+ import sys
+ import warnings
+@@ -453,7 +454,8 @@ class ReflectionTest(unittest.TestCase):
+                         expected_max + 1)
+ 
+     TestMinAndMaxIntegers('optional_int32', -(1 << 31), (1 << 31) - 1)
+-    TestMinAndMaxIntegers('optional_uint32', 0, 0xffffffff)
++    if platform.architecture()[0] != '32bit':
++      TestMinAndMaxIntegers('optional_uint32', 0, 0xffffffff)
+     TestMinAndMaxIntegers('optional_int64', -(1 << 63), (1 << 63) - 1)
+     TestMinAndMaxIntegers('optional_uint64', 0, 0xffffffffffffffff)
+     # A bit of white-box testing since -1 is an int and not a long in C++ and
+--- protobuf-3.21.12.orig/python/google/protobuf/internal/text_format_test.py
++++ protobuf-3.21.12/python/google/protobuf/internal/text_format_test.py
+@@ -39,8 +39,6 @@ import textwrap
+ 
+ import unittest
+ 
+-import platform
+-
+ from google.protobuf import any_pb2
+ from google.protobuf import struct_pb2
+ from google.protobuf import any_test_pb2
+@@ -1052,52 +1050,29 @@ class OnlyWorksWithProto2RightNowTests(T
+     all_data = message.SerializeToString()
+     empty_message = unittest_pb2.TestEmptyMessage()
+     empty_message.ParseFromString(all_data)
+-    if platform.architecture()[0] != '32bit':
+-      self.assertEqual('  1: 101\n'
+-                       '  12: 4636878028842991616\n'
+-                       '  14: "hello"\n'
+-                       '  15: "103"\n'
+-                       '  16 {\n'
+-                       '    17: 104\n'
+-                       '  }\n'
+-                       '  18 {\n'
+-                       '    1: 105\n'
+-                       '  }\n',
+-                       text_format.MessageToString(empty_message,
+-                                                   indent=2,
+-                                                   print_unknown_fields=True))
+-      self.assertEqual('1: 101 '
+-                       '12: 4636878028842991616 '
+-                       '14: "hello" '
+-                       '15: "103" '
+-                       '16 { 17: 104 } '
+-                       '18 { 1: 105 }',
+-                       text_format.MessageToString(empty_message,
+-                                                   print_unknown_fields=True,
+-                                                   as_one_line=True))
+-    else:
+-      self.assertEqual('  1: 101\n'
+-                       '  12: 0\n'
+-                       '  14: "hello"\n'
+-                       '  15: "103"\n'
+-                       '  16 {\n'
+-                       '    17: 104\n'
+-                       '  }\n'
+-                       '  18 {\n'
+-                       '    1: 105\n'
+-                       '  }\n',
+-                       text_format.MessageToString(empty_message,
+-                                                   indent=2,
+-                                                   print_unknown_fields=True))
+-      self.assertEqual('1: 101 '
+-                       '12: 0 '
+-                       '14: "hello" '
+-                       '15: "103" '
+-                       '16 { 17: 104 } '
+-                       '18 { 1: 105 }',
+-                       text_format.MessageToString(empty_message,
+-                                                   print_unknown_fields=True,
+-                                                   as_one_line=True))
++    self.assertEqual('  1: 101\n'
++                     '  12: 4636878028842991616\n'
++                     '  14: "hello"\n'
++                     '  15: "103"\n'
++                     '  16 {\n'
++                     '    17: 104\n'
++                     '  }\n'
++                     '  18 {\n'
++                     '    1: 105\n'
++                     '  }\n',
++                     text_format.MessageToString(empty_message,
++                                                 indent=2,
++                                                 print_unknown_fields=True))
++    self.assertEqual('1: 101 '
++                     '12: 4636878028842991616 '
++                     '14: "hello" '
++                     '15: "103" '
++                     '16 { 17: 104 } '
++                     '18 { 1: 105 }',
++                     text_format.MessageToString(empty_message,
++                                                 print_unknown_fields=True,
++                                                 as_one_line=True))
++
+   def testPrintInIndexOrder(self):
+     message = unittest_pb2.TestFieldOrderings()
+     # Fields are listed in index order instead of field number.

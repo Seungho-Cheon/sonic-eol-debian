@@ -1,0 +1,3 @@
+/usr/lib/${DEB_HOST_MULTIARCH}/libprotobuf-lite.la
+/usr/lib/${DEB_HOST_MULTIARCH}/libprotobuf.la
+/usr/lib/${DEB_HOST_MULTIARCH}/libprotoc.la

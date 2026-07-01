@@ -1,0 +1,8 @@
+#POM properties
+#2023-04-09 05:50:55 UTC
+groupId=com.google.protobuf
+classifier=
+artifactId=protobuf-java-util
+type=bundle
+version=3.21.12
+debianVersion=debian
