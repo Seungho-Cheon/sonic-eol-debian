@@ -35,7 +35,11 @@ $(addprefix $(DEST)/, $(MAIN_TARGET)): $(DEST)/% :
 	rm -rf net-snmp-$(SNMPD_VERSION)
 
 	# download debian net-snmp
+ifneq (,$(findstring 5.9,$(SNMPD_VERSION)))
+	dget -u https://snapshot.debian.org/archive/debian/20220822T155847Z/pool/main/n/net-snmp/net-snmp_$(SNMPD_VERSION_FULL).dsc
+else
 	dget -u https://snapshot.debian.org/archive/debian/20190105T085859Z/pool/main/n/net-snmp/net-snmp_$(SNMPD_VERSION_FULL).dsc
+endif
 
 	pushd net-snmp-$(SNMPD_VERSION)
 	git init

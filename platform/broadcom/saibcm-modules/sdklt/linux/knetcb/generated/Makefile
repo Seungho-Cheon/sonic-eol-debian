@@ -1,0 +1,1 @@
+/sonic/platform/broadcom/saibcm-modules/sdklt/linux/knetcb/Makefile
