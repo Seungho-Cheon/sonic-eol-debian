@@ -307,7 +307,7 @@ ENABLE_BOOTCHART = n
 
 # INCLUDE_FIPS - support FIPS feature, only for amd64 or arm64, armhf not supported yet
 # ENABLE_FIPS - support FIPS flag, if enabled, no additional config requred for the image to support FIPS
-INCLUDE_FIPS ?= y
+INCLUDE_FIPS ?= n
 ENABLE_FIPS ?= n
 
 # SONIC_SLAVE_DOCKER_DRIVER - set the sonic slave docker storage driver

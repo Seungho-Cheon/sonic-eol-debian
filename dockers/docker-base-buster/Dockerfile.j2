@@ -73,9 +73,7 @@ RUN curl -o redis-tools_6.0.6-1~bpo10+1_arm64.deb "https://sonicstorage.blob.cor
 RUN dpkg -i redis-tools_6.0.6-1~bpo10+1_arm64.deb || apt-get install -f -y
 RUN rm redis-tools_6.0.6-1~bpo10+1_arm64.deb
 {% else %}
-RUN curl -o redis-tools_6.0.6-1~bpo10+1_amd64.deb "https://sonicstorage.blob.core.windows.net/public/redis/redis-tools_6.0.6-1~bpo10+1_amd64.deb"
-RUN dpkg -i redis-tools_6.0.6-1~bpo10+1_amd64.deb || apt-get install -f -y
-RUN rm redis-tools_6.0.6-1~bpo10+1_amd64.deb
+RUN apt-get update && apt-get install -y -t buster-backports redis-tools
 {% endif %}
 
 # Upgrade pip via PyPI and uninstall the Debian version
