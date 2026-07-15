@@ -34,5 +34,5 @@ A high-performance, cost-effective, and open-source network infrastructure built
 
 ## 🏗️ Architecture Overview
 
-SONiC Applications > Redis DB (AppDB / ConfigDB / StateDB / AsicDB) > SAI (Switch Abstraction Interface) > White Box ASIC (DPU / NPU / Fabric)
+SONiC Applications -> Redis DB (AppDB / ConfigDB / StateDB / AsicDB) -> SAI (Switch Abstraction Interface) -> White Box ASIC (DPU / NPU / Fabric)
 
